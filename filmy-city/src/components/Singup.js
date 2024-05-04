@@ -11,7 +11,7 @@ import { addDoc } from 'firebase/firestore'
 const auth = getAuth(app)
 auth.settings.appVerificationDisabledForTesting = true;
 
-const Login = () => {
+const SignUp = () => {
   const [Form, setFrom] = useState({
     name: "",
     mobile: "",
@@ -165,4 +165,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default SignUp;
