@@ -3,6 +3,7 @@ import { TailSpin } from 'react-loader-spinner'
 import { Link } from 'react-router-dom'
 import Video2 from '../Video/bg-2.mp4'
 import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from 'firebase/auth'
 const Login = () => {
 
     const [loading, setLoading] = useState(false)
