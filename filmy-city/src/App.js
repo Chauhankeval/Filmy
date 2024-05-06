@@ -8,7 +8,10 @@ import { Route, Routes } from 'react-router-dom';
 import Detail from './components/Detail';
 import { createContext, useState } from 'react';
 import Login from './components/Login';
-import Singup from './components/Singup';
+import Singup from './components/SignUp'
+import { ToastContainer } from 'react-toastify';
+
+
 
 const AppState = createContext()
 function App() {
@@ -25,7 +28,7 @@ function App() {
           <Route path='/addmovies' element={<Addmovies />}></Route>
           <Route path='/detail/:id' element={<Detail />}></Route>
           <Route path='/login' element={<Login />}></Route>
-          <Route path='/singup' element={<Singup />}></Route>
+          <Route path='/signup' element={<Singup />}></Route>
 
 
 
@@ -33,7 +36,7 @@ function App() {
 
 
         </Routes>
-
+        <ToastContainer />
 
       </div>
     </AppState.Provider>

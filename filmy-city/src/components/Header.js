@@ -13,23 +13,23 @@ const Header = () => {
             </Link>
 
             <p className='text-white flex mr-3 item-center text-lg cursor-pointer'>
-                {useAppState.login ?
 
 
-                    <Link to='/addmovies'>
-                        <Button>
-                            <AddIcon className='mr-1' color='secondary' /><span className='text-white'>Add New</span>
-                        </Button>
 
-                    </Link>
-                    :
-                    <Link to='/login'>
-                        <Button>
-                           <span className='text-white font-medium  bg-green-500 px-4 py-2'>Login</span>
-                        </Button>
+                <Link to='/addmovies'>
+                    <Button className='flex items-center justify-center'>
+                        <AddIcon className='mr-1 ' color='secondary' /><span className='text-white'>Add New</span>
+                    </Button>
 
-                    </Link>
-                }
+                </Link>
+
+                <Link to='/login'>
+                    <Button>
+                        <span className='text-white font-medium  bg-green-500 px-4 py-2'>Login</span>
+                    </Button>
+
+                </Link>
+
             </p>
 
         </div>

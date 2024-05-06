@@ -1,5 +1,6 @@
 
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import {getFirestore ,collection } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -17,6 +18,6 @@ export const db = getFirestore(app) // Access firebase Store
 export const moviesRef = collection(db , "movies")
 export const reviewsRef = collection(db , "reviews")
 export const userRef = collection(db , "users")
-
+export const auth = getAuth(app)
 
 export default app;

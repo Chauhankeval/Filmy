@@ -37,7 +37,7 @@ const Detail = () => {
                <>
                 <img className='h-96 md:sticky top-24' src={data.image} />
                 <div className='md:ml-4 ml-0 w-full md:w-1/2 '>
-                    <h1 class="text-gray-400 text-3xl title-font font-medium mb-1">{data.title} <span className='text-sm title-font text-gray-500 tracking-widest'>({data.year})</span></h1>
+                    <h1 className="text-gray-400 text-3xl title-font font-medium mb-1">{data.title} <span className='text-sm title-font text-gray-500 tracking-widest'>({data.year})</span></h1>
                     <ReactStars
                         count={5}
                         half={true}
@@ -51,7 +51,7 @@ const Detail = () => {
                     <Reviews id={id} prevRating={data.rating} userRated={data.rated}/>
                 </div>
             </>
-                    }
+           }
         </div>
     )
 }
