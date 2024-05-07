@@ -19,7 +19,7 @@ const SignUp = () => {
       setLoading(false);
       return;
     }
-
+  
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const newUser = {
@@ -28,15 +28,15 @@ const SignUp = () => {
         email: userCredential.user.email,
         time: Timestamp.now()
       };
-
+  
       const userRef = collection(db, 'user');
       await addDoc(userRef, newUser);
-
-      toast.success('Signup successful');
+  
+      window.alert("Logged in successfully")
+      window.location.href = "/"
       setName('');
       setEmail('');
       setPassword('');
-      window.location.href = '/login'
     } catch (error) {
       console.error('Error signing up:', error.message);
       toast.error('Signup failed');
@@ -44,7 +44,7 @@ const SignUp = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className='w-full h-screen relative top-0'>
       <video className='w-[100%] h-[100%] object-cover ' src={Video} autoPlay loop muted ></video>

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import ReactStars from 'react-stars'
-import { reviewsRef, db } from '../Firebase/Firebase'
-import { addDoc, doc, updateDoc, query, where, getDocs } from 'firebase/firestore'
-import { TailSpin, ThreeDots } from 'react-loader-spinner'
-import swal from 'sweetalert'
+import React, { useEffect, useState } from 'react';
+import ReactStars from 'react-stars';
+import { reviewsRef, db } from '../Firebase/Firebase';
+import { addDoc, doc, updateDoc, query, where, getDocs } from 'firebase/firestore';
+import { TailSpin, ThreeDots } from 'react-loader-spinner';
+import swal from 'sweetalert';
 
-import { useNavigate } from 'react-router-dom'
 
 const Reviews = ({ id, prevRating, userRated }) => {
-
     const [rating, setRating] = useState(0);
     const [loading, setLoading] = useState(false);
     const [reviewsLoading, setReviewsLoading] = useState(false);
@@ -19,20 +17,19 @@ const Reviews = ({ id, prevRating, userRated }) => {
     const sendReview = async () => {
         setLoading(true);
         try {
-
             await addDoc(reviewsRef, {
                 movieid: id,
                 name: "keval",
                 rating: rating,
                 thought: form,
                 timestamp: new Date().getTime()
-            })
+            });
 
             const ref = doc(db, "movies", id);
             await updateDoc(ref, {
                 rating: prevRating + rating,
                 rated: userRated + 1
-            })
+            });
 
             setRating(0);
             setForm("");
@@ -42,40 +39,38 @@ const Reviews = ({ id, prevRating, userRated }) => {
                 icon: "success",
                 buttons: false,
                 timer: 3000
-            })
-
+            });
         } catch (error) {
             swal({
                 title: error.message,
                 icon: "error",
                 buttons: false,
                 timer: 3000
-            })
+            });
         }
         setLoading(false);
-    }
+    };
 
     useEffect(() => {
         async function getData() {
             setReviewsLoading(true);
             setData([]);
-            let quer = query(reviewsRef, where('movieid', '==', id))
+            const quer = query(reviewsRef, where('movieid', '==', id));
             const querySnapshot = await getDocs(quer);
-
             querySnapshot.forEach((doc) => {
-                setData((prev) => [...prev, doc.data()])
-            })
-
+                setData((prev) => [...prev, doc.data()]);
+            });
             setReviewsLoading(false);
         }
         getData();
-    }, [newAdded])
+    }, [newAdded]);
 
-    const Enterbtn = (e) => {
-        if (e.key == "Enter") {
-            setData()
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            sendReview();
         }
-    }
+    };
+
     return (
         <div className='mt-4 border-t-2 border-gray-700 w-full'>
             <ReactStars
@@ -89,40 +84,34 @@ const Reviews = ({ id, prevRating, userRated }) => {
                 onChange={(e) => setForm(e.target.value)}
                 placeholder='Share Your thoughts...'
                 className='w-full p-2 outline-none header text-black'
+                onKeyPress={handleKeyPress}
             />
-            <button onClick={sendReview} onKeyPress={(e) => Enterbtn(e)} className='bg-green-600 flex mt-2 justify-center w-full p-2'>
-                {loading ? <TailSpin  height={20} color="white" /> : 'Share'}
+            <button onClick={sendReview} className='bg-green-600 flex mt-2 justify-center w-full p-2'>
+                {loading ? <TailSpin height={20} color="white" /> : 'Share'}
             </button>
-
-
-
-
-            {reviewsLoading ?
+            {reviewsLoading ? (
                 <div className='mt-6 flex justify-center'><ThreeDots height={10} color="white" /></div>
-                :
+            ) : (
                 <div className='mt-4'>
-                    {data.map((e, i) => {
-                        return (
-                            <div className=' p-2 w-full border-b header bg-opacity-50 border-gray-600 mt-2' key={i}>
-                                <div className='flex items-center'>
-                                    <p className='text-blue-500'>{e.name}</p>
-                                    <p className='ml-3 text-xs'>({new Date(e.timestamp).toLocaleString()})</p>
-                                </div>
-                                <ReactStars
-                                    size={15}
-                                    half={true}
-                                    value={e.rating}
-                                    edit={false}
-                                />
-
-                                <p>{e.thought}</p>
+                    {data.map((e, i) => (
+                        <div className=' p-2 w-full border-b header bg-opacity-50 border-gray-600 mt-2' key={i}>
+                            <div className='flex items-center'>
+                                <p className='text-blue-500'>{e.name}</p>
+                                <p className='ml-3 text-xs'>({new Date(e.timestamp).toLocaleString()})</p>
                             </div>
-                        )
-                    })}
+                            <ReactStars
+                                size={15}
+                                half={true}
+                                value={e.rating}
+                                edit={false}
+                            />
+                            <p>{e.thought}</p>
+                        </div>
+                    ))}
                 </div>
-            }
+            )}
         </div>
-    )
-}
+    );
+};
 
-export default Reviews
+export default Reviews;

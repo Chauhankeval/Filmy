@@ -10,6 +10,7 @@ import { AppState } from '../App'
 const Login = () => {
 
     const useAppState = useContext(AppState)
+    const { setuserName ,setLogin} = useAppState
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,7 +21,8 @@ const Login = () => {
             const res = await signInWithEmailAndPassword(auth, email, password);
             window.alert("Logged in successfully")
             localStorage.setItem("user", JSON.stringify(res));
-            useAppState.setLogin(false);
+            setLogin(false);
+            setuserName(res.name)
             window.location.href = '/'
             setEmail("")
             setPassword("")
